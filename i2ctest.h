@@ -9,6 +9,7 @@ extern "C" {
     #include "utility/twi.h"
 }
 
-void scanI2CBus( byte from_addr , byte to_addr , void ( *callback )( byte address , byte result ) );
+void scanI2CBus( byte from_addr , byte to_addr , bool dump_all_address_to_callback , void ( *callback )( byte address , byte result ) );
+void defaultScanCallback( byte address , byte result );
 
 #endif
