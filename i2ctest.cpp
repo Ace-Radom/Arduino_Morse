@@ -3,9 +3,6 @@
 
 #include"i2ctest.h"
 
-byte start_address = 1;
-byte end_address   = 127;
-
 // Scan the I2C bus between addresses from_addr and to_addr.
 // On each address, call the callback function with the address and result.
 // If result==0, address was found, otherwise, address wasn't found
