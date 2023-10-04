@@ -2,7 +2,6 @@
 #define _MORSE_H_
 
 #ifndef Arduino_h
-#include<cstdio>
 #include<cstring>
 typedef unsigned short int uint16_t;
 #endif
