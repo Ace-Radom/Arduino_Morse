@@ -3,18 +3,22 @@
 
 #include"i2ctest.h"
 
-// Scan the I2C bus between addresses from_addr and to_addr.
-// On each address, call the callback function with the address and result.
-// If result==0, address was found, otherwise, address wasn't found
-// (can use result to potentially get other status on the I2C bus, see twi.c)
-// Assumes Wire.begin() has already been called
-void scanI2CBus( byte from_addr , byte to_addr , bool dump_all_address_to_callback ,
+/**
+ * @brief Scan I2C bus between addresses @p from_addr and @p end_addr
+ * 
+ * @param from_addr                     scan begin address
+ * @param to_addr                       scan end address
+ * @param dump_all_address_to_callback  will the function call the callback function at each address
+ * @param callback                      callback function
+ * 
+ * @attention Assumes Wire.begin() has already been called
+*/
+void ScanI2CBus( byte from_addr , byte to_addr , bool dump_all_address_to_callback ,
                  void ( *callback )( byte address , byte result ) ){
     byte rc;
-    byte data = 0; // not used, just an address to feed to twi_writeTo()
-    for( byte addr = from_addr ; addr <= to_addr ; addr++ )
+    for ( byte addr = from_addr ; addr <= to_addr ; addr++ )
     {
-        rc = twi_writeTo( addr , &data , 0 , 1 , 1 );
+        rc = twi_writeTo( addr , NULL , 0 , 1 , 1 );
         if( rc == 0 || dump_all_address_to_callback )
             callback( addr , rc );
     }
@@ -23,7 +27,7 @@ void scanI2CBus( byte from_addr , byte to_addr , bool dump_all_address_to_callba
 void defaultScanCallback( byte address , byte result ){
     if ( result == 0 )
     {
-        Serial.print( "Address: " );
+        Serial.print( "Address: 0x" );
         Serial.print( address , HEX );
         Serial.println( "\tdevice found" );
     }
